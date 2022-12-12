@@ -1,6 +1,4 @@
-﻿using iTextSharp.text;
-using Org.BouncyCastle.Crypto.Tls;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 
 namespace DKS3SC;
 
@@ -58,6 +56,12 @@ public class Signer
         _slot = slot;
     }
 
+    public void Apparence(ISignatureDetails signatureDetails)
+    {
+        if (_adapter is null)
+            _adapter = new Manager(signatureDetails);
+    }
+
     public Dictionary<int, string> Certificates { get => CertificatesFromSlot();  }
 
     public Dictionary<int, string> CertificatesFromSlot()
@@ -99,12 +103,43 @@ public class Signer
 
     public void Sign()
     {
-        Adapter.SignFile(FileInput, FileOutput, CertificateSelected);
+        try
+        {
+            ValidateCertificate(CertificateSelected);
+
+            Adapter.SignFile(FileInput, FileOutput, CertificateSelected);
+        }
+        catch (Exceptions.NotValidCertificateException exceptionCertificate)
+        {
+            throw exceptionCertificate;
+        }
+        catch (Exception exception)
+        {
+            throw exception;
+        }
     }
 
     public void SignAll()
     {
-        Adapter.SignAll(FilesInput, FilesOutput, CertificateSelected);
+        try
+        {
+            ValidateCertificate(CertificateSelected);
+
+            Adapter.SignAll(FilesInput, FilesOutput, CertificateSelected);
+        }
+        catch (Exceptions.NotValidCertificateException exceptionCertificate)
+        {
+            throw exceptionCertificate;
+        }
+        catch (Exception exception)
+        {
+            throw exception;
+        }
+    }
+
+    public void ValidateCertificate(X509Certificate2 cetificate)
+    {
+        _adapter?.Validate(cetificate);
     }
 
     public Dictionary<string, string> Details()

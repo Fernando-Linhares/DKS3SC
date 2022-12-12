@@ -20,9 +20,7 @@ namespace DKS3SC
 
             if(signedData.Length == 0)
             {
-                throw new Exception(
-                    "Error on Sign data. Not found private key RSA in certificate selected. Certificate - " + _cert.Issuer
-                );
+                throw new Exceptions.SignatureFailException(_cert);
             }
 
             return signedData;

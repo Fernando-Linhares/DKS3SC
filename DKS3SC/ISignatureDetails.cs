@@ -12,7 +12,7 @@ namespace DKS3SC
 
         public bool? HasLayers { get; set; }
         
-        public bool HasRenderMode { get; }
+        public bool Visible { get; }
 
         public void AddRender(PdfSignatureAppearance appearance);
     }

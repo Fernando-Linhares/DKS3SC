@@ -3,6 +3,7 @@ using iTextSharp.text.pdf.security;
 using Certificate = System.Security.Cryptography.X509Certificates.X509Certificate2;
 using Parser = Org.BouncyCastle.X509.X509CertificateParser;
 using BouncyCert = Org.BouncyCastle.X509.X509Certificate;
+using CryptoException = System.Security.Cryptography.CryptographicException;
 
 namespace DKS3SC
 {
@@ -89,13 +90,9 @@ namespace DKS3SC
 
             apparence.Acro6Layers = _signatureDetails.HasLayers ??  true;
 
-            if (_signatureDetails.HasRenderMode)
+            if (_signatureDetails.Visible)
             {
                 _signatureDetails.AddRender(apparence);
-            }
-            else
-            {
-                apparence.SignatureRenderingMode =  PdfSignatureAppearance.RenderingMode.DESCRIPTION;
             }
 
             return apparence;
@@ -110,6 +107,19 @@ namespace DKS3SC
             directory.Date = new PdfDate(DateTime.Now);
 
             return directory;
+        }
+
+        public void Validate(Certificate cetificate)
+        {
+            try
+            {
+                if (!cetificate.Verify())
+                    throw new Exceptions.NotValidCertificateException(cetificate);
+            }
+            catch(CryptoException exception)
+            {
+                throw exception;
+            }
         }
 
         public void Execute(PdfSignatureAppearance appearance, IExternalSignature external, BouncyCert[] chain)
