@@ -7,7 +7,6 @@ namespace DKS3SC;
  * Created at: 2022-12-12
  * Repository: https://github.com/Fernando-Linhares/DKS3SC
  * Dedication: I dedicate this code to the bast song game "Dark Souls 3 Soul of Cinder"
- * 
  */
 
 public class Signer
