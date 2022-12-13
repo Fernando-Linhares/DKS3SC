@@ -4,6 +4,7 @@ using Certificate = System.Security.Cryptography.X509Certificates.X509Certificat
 using Parser = Org.BouncyCastle.X509.X509CertificateParser;
 using BouncyCert = Org.BouncyCastle.X509.X509Certificate;
 using CryptoException = System.Security.Cryptography.CryptographicException;
+using DKS3SC.Dependencies;
 
 namespace DKS3SC
 {
@@ -76,7 +77,7 @@ namespace DKS3SC
 
         public PdfSignatureAppearance BuildPreferences(PdfStamper stamper, BouncyCert chain, PdfSignature directory, string  name)
         {
-            var apparence = stamper.SignatureAppearance;
+            var apparence = (Apparence) stamper.SignatureAppearance;
 
             apparence.Certificate = chain;
 
@@ -92,7 +93,7 @@ namespace DKS3SC
 
             if (_signatureDetails.Visible)
             {
-                _signatureDetails.AddRender(apparence);
+                _signatureDetails.Apply(apparence);
             }
 
             return apparence;

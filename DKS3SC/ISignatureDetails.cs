@@ -1,4 +1,4 @@
-﻿using iTextSharp.text.pdf;
+﻿using DKS3SC.Dependencies;
 
 namespace DKS3SC
 {
@@ -14,6 +14,6 @@ namespace DKS3SC
         
         public bool Visible { get; }
 
-        public void AddRender(PdfSignatureAppearance appearance);
+        public void Apply(Apparence apparence);
     }
 }

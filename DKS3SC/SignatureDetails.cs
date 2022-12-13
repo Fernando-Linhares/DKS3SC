@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text.pdf;
 using iTextSharp.text;
+using DKS3SC.Dependencies;
 
 namespace DKS3SC
 {
@@ -15,10 +16,10 @@ namespace DKS3SC
 
         public bool Visible { get => true; }
 
-        public void AddRender(PdfSignatureAppearance appearance)
+        public void Apply(Apparence apparence)
         {
-            appearance.SignatureRenderingMode = PdfSignatureAppearance.RenderingMode.DESCRIPTION;
-            appearance.SetVisibleSignature(new Rectangle(100, 100, 300, 200), 1, "Signature");
+            apparence.SignatureRenderingMode = PdfSignatureAppearance.RenderingMode.DESCRIPTION;
+            apparence.SetVisibleSignature(new Rectangle(100, 100, 300, 200), 1, "Signature");
         }
     }
 }

@@ -49,13 +49,36 @@ public class Signer
 
     public Signer()
     {
+        StoreCertificates();
+    }
+
+    public Signer(string fileInput, string fileOutput)
+    {
+        FileInput = fileInput;
+        
+        FileOutput = fileOutput;
+        
+        StoreCertificates();
+    }
+
+    public Signer(string fileInput)
+    {
+        FileInput = fileInput;
+
+        FileOutput = fileInput;
+
+        StoreCertificates();
+    }
+
+    public void StoreCertificates()
+    {
         X509Store slot = new X509Store(StoreName.My, StoreLocation.CurrentUser);
 
         slot.Open(OpenFlags.ReadWrite);
 
         _certs = new List<X509Certificate2>();
 
-        foreach(X509Certificate2 localCert in slot.Certificates)
+        foreach (X509Certificate2 localCert in slot.Certificates)
         {
             _certs.Add(localCert);
         }
