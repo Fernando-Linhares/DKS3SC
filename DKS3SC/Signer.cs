@@ -11,9 +11,45 @@ namespace DKS3SC;
 
 public class Signer
 {
-    private List<X509Certificate2>? _certs;
+    private List<X509Certificate2> _certs;
+
+    public List<X509Certificate2> Certs
+    {
+        get
+        {
+            if (_certs is null)
+            {
+                _certs = new List<X509Certificate2>();
+            }
+
+            return _certs;
+        }
+        set
+        {
+            _certs = value;
+        }
+    }
+
 
     private X509Store _slot;
+
+    private X509Store Slot
+    {
+        get
+        {
+            if(_slot is null)
+            {
+                _slot = new X509Store();
+            }
+
+            return _slot;
+        }
+        set
+        {
+            _slot = value;
+        }
+      }
+
 
     private IManager? _adapter;
 
@@ -76,20 +112,20 @@ public class Signer
 
         slot.Open(OpenFlags.ReadWrite);
 
-        _certs = new List<X509Certificate2>();
+        Certs = new List<X509Certificate2>();
 
         foreach (X509Certificate2 localCert in slot.Certificates)
         {
-            _certs.Add(localCert);
+            Certs.Add(localCert);
         }
 
-        _slot = slot;
+        Slot = slot;
     }
 
     public void Apparence(ISignatureDetails signatureDetails)
     {
-        if (_adapter is null)
-            _adapter = new Manager(signatureDetails);
+        if (Adapter is null)
+            Adapter = new Manager(signatureDetails);
     }
 
     public Dictionary<int, string> Certificates { get => CertificatesFromSlot();  }
@@ -121,14 +157,14 @@ public class Signer
 
     public void SelectCertificate(int id)
     {
-        if (_certs is null || _certs.Count == 0)
+        if (Certs is null || Certs.Count == 0)
         {
             throw new ArgumentNullException("certs not found on device");
         }
 
         int index = id - 1;
 
-        CertificateSelected = _certs[index];
+        CertificateSelected = Certs[index];
     }
 
     public void Sign()
@@ -145,7 +181,7 @@ public class Signer
         }
         catch (Exception exception)
         {
-            throw exception;
+            throw exception?? new Exception(exception?.Message);
         }
     }
 
@@ -163,7 +199,7 @@ public class Signer
         }
         catch (Exception exception)
         {
-            throw exception;
+            throw exception ?? new Exception(exception?.Message);
         }
     }
 
@@ -179,7 +215,7 @@ public class Signer
 
     ~Signer()
     {
-        _certs = null;
-        _slot.Close();
+        Certs.Clear();
+        Slot.Close();
     }
 }
