@@ -205,7 +205,7 @@ public class Signer
 
     public void ValidateCertificate(X509Certificate2 cetificate)
     {
-        _adapter?.Validate(cetificate);
+        Adapter?.Validate(cetificate);
     }
 
     public Dictionary<string, string> Details()
