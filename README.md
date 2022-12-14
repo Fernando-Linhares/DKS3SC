@@ -74,7 +74,7 @@ Set you configuration class on signer like described below
 
 Now you can do your configuration on the method ``Apply`` as described
 
-            public void Apply(Apparence apparence)
+            public void Apply(PdfSignatureAppearance apparence)
             {
                 apparence.SignatureRenderingMode = PdfSignatureAppearance.RenderingMode.DESCRIPTION;
                 apparence.SetVisibleSignature(new  iTextSharp.text.Rectangle(100, 100, 300, 200), 1, "Signature");
