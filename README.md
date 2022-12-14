@@ -22,9 +22,9 @@ and import the assembly to the project.
 
 
 ### Namespaces
-using DKS3SC;
-using DKS3SC.Dependencies;
-using DKS3SC.Exceptions;
+            using DKS3SC;
+            using DKS3SC.Dependencies;
+            using DKS3SC.Exceptions;
 
 ### Steps Development
 The first step you need to intantiate the class main ``Signer``
