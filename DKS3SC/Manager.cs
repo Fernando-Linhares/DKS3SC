@@ -77,7 +77,7 @@ namespace DKS3SC
 
         public PdfSignatureAppearance BuildPreferences(PdfStamper stamper, BouncyCert chain, PdfSignature directory, string  name)
         {
-            var apparence = (Apparence) stamper.SignatureAppearance;
+            var apparence = stamper.SignatureAppearance;
 
             apparence.Certificate = chain;
 
