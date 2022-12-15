@@ -30,7 +30,6 @@ public class Signer
         }
     }
 
-
     private X509Store _slot;
 
     private X509Store Slot
@@ -49,7 +48,6 @@ public class Signer
             _slot = value;
         }
       }
-
 
     private IManager? _adapter;
 
@@ -124,7 +122,6 @@ public class Signer
 
     public void Apparence(ISignatureDetails signatureDetails)
     {
-        if (Adapter is null)
             Adapter = new Manager(signatureDetails);
     }
 

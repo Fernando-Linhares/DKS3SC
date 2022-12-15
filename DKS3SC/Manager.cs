@@ -62,7 +62,6 @@ namespace DKS3SC
 
         public BouncyCert[] BuildChain(Certificate certificate)
         {
-
             BouncyCert[] chain = new BouncyCert[1];
 
             chain[0] = _certParser.ReadCertificate(certificate.RawData);
