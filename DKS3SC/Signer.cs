@@ -11,6 +11,8 @@ namespace DKS3SC;
 
 public class Signer
 {
+    public bool MultiThread = false;
+
     private List<X509Certificate2> _certs;
 
     public List<X509Certificate2> Certs
@@ -168,6 +170,9 @@ public class Signer
     {
         try
         {
+
+            Adapter.MultiThread = MultiThread;
+
             ValidateCertificate(CertificateSelected);
 
             Adapter.SignFile(FileInput, FileOutput, CertificateSelected);

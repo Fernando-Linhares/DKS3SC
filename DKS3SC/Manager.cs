@@ -4,12 +4,13 @@ using Certificate = System.Security.Cryptography.X509Certificates.X509Certificat
 using Parser = Org.BouncyCastle.X509.X509CertificateParser;
 using BouncyCert = Org.BouncyCastle.X509.X509Certificate;
 using CryptoException = System.Security.Cryptography.CryptographicException;
-using DKS3SC.Dependencies;
+using System.Threading;
 
 namespace DKS3SC
 {
     public class Manager : IManager
     {
+        public bool MultiThread { get; set; }
         private ISignatureDetails _signatureDetails;
 
         private Parser _certParser;
@@ -34,6 +35,20 @@ namespace DKS3SC
         }
 
         public void SignFile(string fileinput, string fileoutput, Certificate certificate)
+        {
+            if(MultiThread)
+            {
+                var thread = new Thread(() => ProcessSignature(fileinput, fileoutput, certificate));
+                
+                thread.Start();
+            }
+            else
+            {
+                ProcessSignature(fileinput, fileoutput, certificate);
+            }
+        }
+
+        public void ProcessSignature(string fileinput, string fileoutput, Certificate certificate)
         {
             BouncyCert[] chain = BuildChain(certificate);
 

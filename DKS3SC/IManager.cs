@@ -5,6 +5,7 @@ namespace DKS3SC;
 
 public interface IManager
 {
+    public bool MultiThread { get; set; }
     public Dictionary<string, string> Details();
 
     public void SignFile(string fileinput, string fileoutput, Certificate certificate);
